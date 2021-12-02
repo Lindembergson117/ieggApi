@@ -17,11 +17,48 @@ const receitaSchema = new mongoose.Schema({ // recipeSchema
 });
 
 
+
 const Receita = mongoose.model('receita', receitaSchema);
 
-const receita = new Receita({ nome: 'Ovo com gema mole', descricao: 'A gema está gemendo', ingredientes: 'Ovo, gema', modoPreparo: 'primeiro pegue o ovo e depois pegue a gema mole e coma a gema mole' , tempoPreparo: 5, nota: 5});
 
-receita.save().then(() => console.log('receita criada'));
+const ovoGemamole = new Receita({
+    nome: 'Ovo com gema mole',
+    descricao: 'A gema está gemendo',
+    ingredientes: 'Ovo, gema',
+    modoPreparo: 'primeiro pegue o ovo e depois pegue a gema mole e coma a gema mole',
+    tempoPreparo: 5,
+    nota: 5
+});
+
+let receitas = [
+    Receita({
+        nome: 'macarrão com ovo',
+        descricao: 'macarão italiano com ovo chines',
+        ingredientes: 'ovo, macarrão',
+        modoPreparo: 'primeiro pegue ovo chines e depois prepare o macarrão e misture ambos',
+        tempoPreparo: 10,
+        nota: 7
+    }),
+    Receita({
+        nome: 'ovo com fruta',
+        descricao: 'ovo argentino com frutas brasileiras',
+        ingredientes: 'ovo, frutas',
+        modoPreparo: 'primeiro pegue o ovo e misture com qualquer fruta',
+        tempoPreparo:40,
+        nota: 10
+    })
+]
+
+function prencherReceitas() {
+    Receita.insertMany(receitas, function(err){
+        if(err){
+            console.log(err)
+        }
+    })
+}
+prencherReceitas()
+
+//receita.save();
 
 //inicio
 app.get('/', function (req, res) {
@@ -30,9 +67,6 @@ app.get('/', function (req, res) {
 
 
 //fim
-app.listen(3000, function(){
+app.listen(3000, function () {
     console.log('Servidor rodando')
 })
-
-
-
